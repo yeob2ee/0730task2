@@ -1,0 +1,5 @@
+<form method='POST' action=""  method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{forms}}
+    <input class="btn btn-dark" type="submit" value="제출하기">
+</form>

@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path
 
 import blogapp.views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +29,7 @@ urlpatterns = [
     path('renew/<int:blog_id>',blogapp.views.renew,name="renew"),
     path('update/<int:blog_id>',blogapp.views.update,name="update"),
     path('delete/<int:blog_id>',blogapp.views.delete,name="delete"),
+    path('usingform/',blogapp.views.usingform , name="usingform"),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

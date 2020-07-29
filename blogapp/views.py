@@ -1,6 +1,8 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from .models import Blogapp
 from django.utils import timezone
+from .forms import BlogPost
+
 
 def main(request):
     blog_all = Blogapp.objects.all().order_by('-id') #쿼리셋, 객체목록 가져오기
@@ -42,3 +44,16 @@ def delete(request,blog_id):
     blog_d=get_object_or_404(Blogapp,pk=blog_id)
     blog_d.delete()
     return redirect('/')     
+
+
+def usingform(request):
+    if request.method =='POST':
+        form = BlogPost(request.POST,request.FILES) 
+        if form.is_valid(): 
+            post = form.save(commit=False)
+            post.pub_date=timezone.now()
+            post.save()
+            return redirect('/')
+    else:
+        forms = BlogPost()
+        return render(request,'usingform.html',{'forms':forms})
